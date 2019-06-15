@@ -7,6 +7,7 @@ import architectures as arch
 import tools.visualization as vis
 import tools.updated_semisup as up
 
+
 train_images, train_labels = mnist_tools.get_data('train')
 test_images, test_labels = mnist_tools.get_data('train')
 
