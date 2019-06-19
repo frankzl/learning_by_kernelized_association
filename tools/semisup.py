@@ -130,11 +130,23 @@ class SemisupModel(object):
     self.model_func = model_func
 
     if test_in is not None:
+
       self.test_in = test_in
+
+      if test_in.get_shape().as_list()[1:] != input_shape:
+        self.resized = tf.image.resize_images(
+                  self.test_in,
+                  tf.constant(input_shape[:2]),
+                  method=tf.image.ResizeMethod.BILINEAR
+                  )
+        self.resized_test_in = self.resized
+      else:
+        self.resized_test_in = self.test_in
     else:
       self.test_in = tf.placeholder(np.float32, [None] + input_shape, 'test_in')
+      self.resized_test_in = self.test_in
 
-    self.test_emb = self.image_to_embedding(self.test_in, is_training=False)
+    self.test_emb = self.image_to_embedding(self.resized_test_in, is_training=False)
     self.test_logit = self.embedding_to_logit(self.test_emb, is_training=False)
 
   def image_to_embedding(self, images, is_training=True):
@@ -303,10 +315,12 @@ class SemisupModel(object):
     self.train_op = slim.learning.create_train_op(self.train_loss, trainer)
     return self.train_op
 
+
   def calc_embedding(self, images, endpoint):
     """Evaluate 'endpoint' tensor for all 'images' using batches."""
     batch_size = self.test_batch_size
     emb = []
+
     for i in range(0, len(images), batch_size):
       emb.append(endpoint.eval({self.test_in: images[i:i + batch_size]}))
     return np.concatenate(emb)

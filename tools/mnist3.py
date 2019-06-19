@@ -23,7 +23,7 @@ They are used in MNIST_train_eval.py.
 
 import numpy as np
 
-import mnist
+import tools.mnist as mnist
 
 NUM_LABELS = mnist.NUM_LABELS
 IMAGE_SHAPE = mnist.IMAGE_SHAPE[:2] + [3]

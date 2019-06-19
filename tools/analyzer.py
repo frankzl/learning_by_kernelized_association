@@ -22,7 +22,7 @@ class Distance:
         return lambda x,y: np.exp(-1.*(x-y).dot(x-y)/(2.*sigma**2))
 
     def get_pseudo_gaussian_k(sigma=1.):
-        return lambda x,y: np.exp(-1.*x.dot(y)/(2.*sigma**2))
+        return lambda x,y: np.exp(1.*x.dot(y)/(2.*sigma**2))
 
     def get_polynomial_k(bias=0, exponent=1):
         return lambda x,y: (x.dot(y) + bias)**exponent

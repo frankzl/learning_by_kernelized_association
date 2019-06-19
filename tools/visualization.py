@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import math
 
-def imshow(images, labels = None, num_row=5, hspace=1, figsize=(10,10), imgwidth=28):
+def imshow(images, labels = None, num_row=5, hspace=1, figsize=(10,10), imgwidth=28, channels=1):
     
     labels = len(images)*[" "] if labels == None else labels
     
@@ -14,5 +14,7 @@ def imshow(images, labels = None, num_row=5, hspace=1, figsize=(10,10), imgwidth
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
         ax.set_title(labels[idx])
-        ax.imshow(images[idx].reshape(-1,imgwidth))
+        if channels == 1:
+            ax.imshow(images[idx].reshape(-1,imgwidth))
+        else: ax.imshow(images[idx].reshape(-1,imgwidth, channels))
     
