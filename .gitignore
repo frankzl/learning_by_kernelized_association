@@ -3,6 +3,8 @@
 slurm*
 *.sbatch
 
+tools/data_dirs.py
+
 
 
 *pycache*
