@@ -1,5 +1,9 @@
 *.swp
 
+slurm*
+*.sbatch
+
+
 
 *pycache*
 

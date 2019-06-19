@@ -103,7 +103,7 @@ with graph.as_default():
     
     summary_writer = tf.summary.FileWriter(log_dir, graph)
     
-    saver = tf.train.Saver()
+    saver = tf.train.Saver(max_to_keep=10000)
 
 test_images = mnist_test_images
 test_labels = mnist_test_labels
