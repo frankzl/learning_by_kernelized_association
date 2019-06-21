@@ -21,17 +21,19 @@ def create_per_class_inputs(images_by_class, n_per_class, class_labels=None):
     batch_images, batch_labels = [], []
 
     class_datasets = []
+    
 
     for images, label in zip (images_by_class, class_labels):
         labels = tf.fill([len(images)], label)
         # images, labels = create_input(images, labels, n_per_class)
         
-        training_dataset = tf.data.Dataset.from_tensor_slices((images, labels)).batch(n_per_class).shuffle(len(images))
+        training_dataset = tf.data.Dataset.from_tensor_slices((images, labels)).batch(n_per_class, drop_remainder=True).shuffle(n_per_class)
 
         #iterator = create_input(images, labels, n_per_class)
-        data = create_input(images, labels, n_per_class)
+        # data = create_input(images, labels, n_per_class)
 
-        class_datasets.append(data)
+        # class_datasets.append(data)
+        class_datasets.append(training_dataset)
 
         #batch_images.append(images)
         #batch_labels.append(labels)

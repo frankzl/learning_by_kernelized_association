@@ -1,0 +1,1 @@
+./train.py --target_dataset mnist3 --walker_weight_envelope_delay 500 --max_checkpoints 5 --new_size 32 --dataset svhn --sup_per_batch 100 --decay_steps 9000 --unsup_batch_size 1000 --sup_per_class -1 --walker_weight_envelope_steps 1 --walker_weight_envelope linear --visit_weight_envelope linear --architecture svhn_model --visit_weight 0.2 --max_steps 12000
