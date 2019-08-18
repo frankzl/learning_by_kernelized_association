@@ -38,3 +38,7 @@ def get_pairwise_distance(data, dist_func):
         for idx2, ele2 in enumerate(data):
             sq_l2_norm[idx1][idx2] = dist_func(ele1,ele2)
     return sq_l2_norm
+
+def plot_similarity(data, dist_func):
+    distances = get_pairwise_distance(data, dist_func)
+    plt.imshow(distances)

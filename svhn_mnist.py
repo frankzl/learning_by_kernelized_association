@@ -1,11 +1,10 @@
 import tensorflow as tf
-import tools.mnist3 as mnist_tools
-import tools.svhn as svhn_tools
+import tools.datasets.mnist3 as mnist_tools
+import tools.datasets.svhn as svhn_tools
 import tools.semisup as semisup
 import numpy as np
 import architectures as arch
 
-import tools.visualization as vis
 import tools.updated_semisup as up
 
 mnist_train_images, mnist_train_labels = mnist_tools.get_data('train')

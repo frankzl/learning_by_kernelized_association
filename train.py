@@ -26,7 +26,9 @@ from functools import partial
 from importlib import import_module
 
 import numpy as np
-import semisup
+import tools.updated_semisup as up
+import tools.semisup as semisup
+import architectures
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 from tensorflow.python.platform import app
@@ -200,22 +202,24 @@ def main(argv):
     del argv
 
     # Load data.
-    dataset_tools = import_module('tools.' + FLAGS.dataset)
+    dataset_tools = import_module('tools.datasets.' + FLAGS.dataset)
     train_images, train_labels = dataset_tools.get_data('train')
+
     if FLAGS.target_dataset is not None:
-        target_dataset_tools = import_module('tools.' + FLAGS.target_dataset)
+        target_dataset_tools = import_module('tools.datasets.' + FLAGS.target_dataset)
         train_images_unlabeled, _ = target_dataset_tools.get_data(
             FLAGS.target_dataset_split)
     else:
         train_images_unlabeled, _ = dataset_tools.get_data('unlabeled')
 
-    architecture = getattr(semisup.architectures, FLAGS.architecture)
+    architecture = getattr(architectures, FLAGS.architecture)
 
     num_labels = dataset_tools.NUM_LABELS
     image_shape = dataset_tools.IMAGE_SHAPE
 
     # Sample labeled training subset.
     seed = FLAGS.sup_seed if FLAGS.sup_seed != -1 else None
+    # [ for each class: (sup_per_class, 32, 32, 3) (image dimension, can vary)]
     sup_by_label = semisup.sample_by_label(train_images, train_labels,
                                            FLAGS.sup_per_class, num_labels,
                                            seed)
@@ -238,8 +242,7 @@ def main(argv):
                                                       merge_devices=True)):
 
             # Set up inputs.
-            t_unsup_images = semisup.create_input(train_images_unlabeled, None,
-                                                  FLAGS.unsup_batch_size)
+            t_unsup_images = semisup.create_input(train_images_unlabeled, None, FLAGS.unsup_batch_size)
             t_sup_images, t_sup_labels = semisup.create_per_class_inputs(
                 sup_by_label, FLAGS.sup_per_batch)
 

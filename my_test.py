@@ -1,10 +1,8 @@
 import tensorflow as tf
-import tools.mnist as mnist_tools
+import tools.datasets.mnist as mnist_tools
 import tools.semisup as semisup
-import numpy as np
 import architectures as arch
 
-import tools.visualization as vis
 import tools.updated_semisup as up
 
 
@@ -40,8 +38,6 @@ IMAGE_SHAPE = mnist_tools.IMAGE_SHAPE
 
 sup_by_label = semisup.sample_by_label(train_images, train_labels,
                                 sup_per_class, NUM_LABELS, seed)
-
-from ipywidgets import IntProgress, Layout
 
 graph = tf.Graph()
 

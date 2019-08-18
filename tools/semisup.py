@@ -212,6 +212,17 @@ class SemisupModel(object):
 
     equality_matrix = tf.equal(tf.reshape(labels, [-1, 1]), labels)
     equality_matrix = tf.cast(equality_matrix, tf.float32)
+
+    # create NxM
+    a_matrix = tf.stack(b.shape[0] * [a], axis=1)
+    # create MxN
+    b_matrix = tf.stack(a.shape[0] * [b], axis=1)
+
+    # pairwise difference
+    diff_matrix = a_matrix - tf.transpose(b_matrix)
+
+
+
     p_target = (equality_matrix / tf.reduce_sum(
         equality_matrix, [1], keepdims=True))
 

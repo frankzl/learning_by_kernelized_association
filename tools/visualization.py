@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import math
 
-def imshow(images, labels = None, num_row=5, hspace=1, figsize=(10,10), imgwidth=28, channels=1):
+def imshow(images, labels = [], num_row=5, hspace=1, figsize=(10,10), imgwidth=28, channels=1):
     
-    labels = len(images)*[" "] if labels == None else labels
+    labels = len(images)*[" "] if (len(labels) == 0) else labels
     
     gs = gridspec.GridSpec(math.ceil(len(images)/num_row),num_row, hspace=hspace)
     f  = plt.figure(figsize=figsize)
